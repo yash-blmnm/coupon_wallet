@@ -103,56 +103,60 @@ function storeToken(token) {
 
 function listLabels(auth) {
   var gmail = google.gmail('v1');
-  // gmail.users.messages.list({
-  //   auth: auth,
-  //   userId: 'me',
-  //   q: 'uber coupon'
-  // }, function(err, response) {
-  //   if (err) {
-  //     console.log('The API returned an error: ' + err);
-  //     return;
-  //   }
-  //   console.log(response);
-  //   // var labels = response.labels;
-  //   // if (labels.length == 0) {
-  //   //   console.log('No labels found.');
-  //   // } else {
-  //   //   console.log('Labels:');
-  //   //   for (var i = 0; i < labels.length; i++) {
-  //   //     var label = labels[i];
-  //   //     console.log('- %s', label.name);
-  //   //   }
-  //   // }
-  // });
-  
-
-  gmail.users.messages.get({
+  gmail.users.messages.list({
     auth: auth,
     userId: 'me',
-    id: '150186c03796adf5',
-    format: 'raw'
+    q: 'uber coupon'
   }, function(err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
       return;
     }
-    
-    // console.log(response);
-    // const simpleParser = require('mailparser').simpleParser;
-    // var result = simpleParser(response.raw, (err, mail)=>{});
-    console.log(new Buffer(response.raw, 'base64').toString('ascii'));
-    var htmlparser = require("htmlparser");
-    var rawHtml = new Buffer(response.raw, 'base64').toString('ascii');
-    var handler = new htmlparser.DefaultHandler(function (error, dom) {
-        if (error)
-          console.log(error);
-        else
-          return dom;
+    var messages = response.messages;
+    messages.forEach(function(element){
+      console.log(element.id);
+      gmail.users.messages.get({
+        auth: auth,
+        userId: 'me',
+        id: '150186c03796adf5',
+        format: 'raw'
+      }, function(err, response) {
+        if (err) {
+          console.log('The API returned an error: ' + err);
+          return;
+        }
       });
-      var parser = new htmlparser.Parser(handler);
-parser.parseComplete(rawHtml);
-console.log(JSON.stringify(handler.dom).html);
+    });
   });
+  
+
+//   gmail.users.messages.get({
+//     auth: auth,
+//     userId: 'me',
+//     id: '150186c03796adf5',
+//     format: 'raw'
+//   }, function(err, response) {
+//     if (err) {
+//       console.log('The API returned an error: ' + err);
+//       return;
+//     }
+    
+//     // console.log(response);
+//     // const simpleParser = require('mailparser').simpleParser;
+//     // var result = simpleParser(response.raw, (err, mail)=>{});
+//     console.log(new Buffer(response.raw, 'base64').toString('ascii'));
+//     var htmlparser = require("htmlparser");
+//     var rawHtml = new Buffer(response.raw, 'base64').toString('ascii');
+//     var handler = new htmlparser.DefaultHandler(function (error, dom) {
+//         if (error)
+//           console.log(error);
+//         else
+//           return dom;
+//       });
+//       var parser = new htmlparser.Parser(handler);
+// parser.parseComplete(rawHtml);
+// console.log(JSON.stringify(handler.dom).html);
+//   });
   // 15c812f1ffe5e5a7
 }
 

@@ -1,7 +1,7 @@
 
 var listCoupons = {
-    init : function(){
-        var coupon_list = [{ provider: 'UBER', code: 'TATASKY15', info:'', validiy: 'Valid till August 30'},{ provider: 'RedBus', code: 'RIDE20', info:'20% off on bus rides', validiy: 'Valid from 1st September to 6th September'}];
+    init : function(data){
+        var coupon_list = data;
         chrome.storage.sync.set({'coupon_list':coupon_list});
         this.getCoupons();
     },
@@ -10,14 +10,23 @@ var listCoupons = {
             var html_element = "",
                 coupon_list = result.coupon_list;
             coupon_list.forEach(function(element) {
-                html_element += '<li class="coupon_item"><h3 class="provider_name" data-name="'+element.provider+'">'+element.provider+'</h3><span class="code">'+element.code+'</span><span class="info">'+element.info+'</span><span class="validity">'+element.validiy+'</span></li>';
+                html_element += '<li class="coupon_item"><h3 class="provider_name" data-name="'+element.provider+'">'+element.provider+' </h3><span class="code"> '+element.code+' </span><span class="info"> '+element.info+' </span><span class="validity"> '+element.validity+' </span></li>';
             });
             $('.coupon_list').html(html_element);
         })
     } 
 }
-var getApiKey = {
-    
+var getCouponsFromDb = {
+    init : function(){
+        $.ajax({
+        url : 'http://localhost:8000/coupons',
+        type : 'get',
+        success: function(data){
+            console.log(data);
+            listCoupons.init(data);
+        }
+    });
+    }
 }
 
 function couponNotify(){
@@ -46,11 +55,8 @@ function couponNotify(){
 $(function(){
     var user_id = 1;
     if(user_id){
-        listCoupons.init();
+        getCouponsFromDb.init()
+        // listCoupons.init(getApiKey.init());
     }
-    // createAlarm()
-    // couponNotify();
-
-    // console.log(couponNotify());
     
 })

@@ -32,11 +32,5 @@ Object.keys(db).forEach(function(modelName) {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
-db.Users.hasMany(db.Coupons);
-db.Users.hasMany(db.CouponTracker);
-db.Coupons.hasMany(db.Users);
-db.Coupons.hasMany(db.CouponTracker);
-db.CouponTracker.belongsTo(db.Coupons);
-db.CouponTracker.belongsTo(db.Users);
 
 module.exports = db;

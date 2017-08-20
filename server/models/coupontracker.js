@@ -12,6 +12,8 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        CouponTracker.belongsTo(models.Users, { foreignKey: 'user_id'})
+        CouponTracker.belongsTo(models.Coupons, { foreignKey: 'coupon_id'})
       }
     }
   });

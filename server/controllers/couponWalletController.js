@@ -1,9 +1,9 @@
 'use strict';
 var coupon_wallet = require('../models/index')
 
-coupon_wallet.Users.findOne().then(user => {
-  console.log(user.get('name'));
-});
+// coupon_wallet.Users.findOne().then(user => {
+//   console.log(user.get('name'));
+// });
 
 exports.list_all_users = function(req, res) {
     coupon_wallet.Users.findAll({}, { raw: true}).then(users => {
@@ -15,6 +15,14 @@ exports.list_all_users = function(req, res) {
         // console.log(users.map(function(user){ return user.toJSON() }));
         var result = users.map(function(user){ return user.toJSON() });
         // console.log(res);
+        return res.json(result);
+    })
+
+};
+
+exports.list_all_coupons = function(req, res) {
+    coupon_wallet.Coupons.findAll({}, { raw: true}).then(coupons => {
+        var result = coupons.map(function(coupon){ return coupon.toJSON() });
         return res.json(result);
     })
 
@@ -44,5 +52,18 @@ exports.add_user = function(req, res){
         phone: data.phone 
     }).then(user => {
         return res.json(user);
+    })
+}
+
+exports.add_coupon = function(req, res){
+    console.log(req.body);
+    var data = req.body;
+    coupon_wallet.Coupons.create({
+        provider: data.provider,
+        code: data.code,
+        info: data.info,
+        validity: data.validity
+    }).then(coupon => {
+        return res.json(coupon);
     })
 }
