@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Coupon Wallet</title>
+        <script src="jquery-3.2.1.min.js"></script>
+        <script src="popup.js"></script>
+        <!-- <script src="eventPage.js"></script> -->
+    </head>
+    <body>
+        <div class="content">
+            <h2> Coupon Wallet </h2>
+            <div class="credentials">
+                <!-- <form>
+                    <ul>
+                        <li class="controls_item"><label>Name</label><input type="text" id="name"></li>
+                        <li class="controls_item"><label>Email</label><input type="text" id="name"></li>
+                    </ul>
+                </form> -->
+            </div>
+             <!-- <h2> Coupon Wallet </h2> -->
+            <ul class="coupon_list">
+                <li class="coupon_item">
+                    <h3 class="provider_name" data-name="OLA">OLA</h3>
+                    <span class="code">OLA351</span>
+                    <span class="info">15% offer on all rides.</span>
+                    <span class="validity">Till 31st August</span>
+                </li>
+
+            </ul> 
+        </div>
+    </body>
+</html>
+<style>
+    .content {
+        min-width: 200px;
+        padding: 0px 10px;
+        min-height: 300px;
+    }
+    .code{
+        font-weight: 500;
+        font-style: italic;
+        padding-right: 5px;
+        
+    }
+    .content ul{
+        padding: 0px;
+    }
+    .coupon_item {
+        list-style: none;
+        border-bottom: 1px solid #dadada;
+        padding-bottom: 10px;
+    }
+</style>
